@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ContactController;
 
 /*
@@ -15,6 +16,25 @@ use App\Http\Controllers\ContactController;
 |
 */
 
+Route::pattern('contact', '[0-9]+');
 Route::redirect('/', '/contacts');
 
-Route::resource('contacts', ContactController::class);
+Route::get('/login', fn() => view('auth.login'))->name('login');
+
+Route::controller(AuthController::class)->group(function () {
+    Route::post('/login', 'login');
+    Route::post('/logout', 'logout');
+});
+
+Route::prefix('contacts')->controller(ContactController::class)->group(function () {
+    Route::get('/', 'index');
+
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::get('/create', 'create');
+        Route::post('/', 'store');
+        Route::get('/{contact}', 'show');
+        Route::get('/{contact}/edit', 'edit');
+        Route::put('/{contact}', 'update');
+        Route::delete('/{contact}', 'destroy');
+    });
+});
