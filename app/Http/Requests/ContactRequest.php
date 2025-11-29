@@ -24,7 +24,7 @@ class ContactRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'min:6', 'max:100'],
-            'contact' => ['required', 'string', 'size:9', $this->uniqueRule('contacts', 'contact')],
+            'contact' => ['required', 'string', 'digits:9', $this->uniqueRule('contacts', 'contact')],
             'email_address' => ['required', 'string', 'max:100', 'email', $this->uniqueRule('contacts', 'email_address')]
         ];
     }

@@ -1,18 +1,29 @@
-<form action="{{ route('login') }}" method="POST">
-    @csrf
+@extends('layouts.app')
 
-    <label>Email</label>
-    <input name="email" type="text" value="{{ old('email') }}">
-    @error('email')
-        <div>{{ $message }}</div>
-    @enderror
+@section('title', 'Login')
 
-    <label>Password</label>
-    <input name="password" type="password" value="{{ old('password') }}">
-    @error('password')
-        <div>{{ $message }}</div>
-    @enderror
+@section('content')
+    <div class="m-5">
+        <form action="{{ route('login') }}" method="POST">
+            @csrf
 
-    <button type="submit">Login</button>
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input name="email" type="email" class="form-control" value="{{ old('email') }}">
+                @error('email')
+                    <div style="color:var(--bs-danger)">{{ $message }}</div>
+                @enderror
+            </div>
 
-</form>
+            <div class="mb-3">
+                <label class="form-label">Password</label>
+                <input name="password" type="password" class="form-control" value="{{ old('password') }}">
+                @error('password')
+                    <div style="color:var(--bs-danger)">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+    </div>
+@endsection

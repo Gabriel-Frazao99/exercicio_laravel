@@ -17,8 +17,8 @@ use App\Http\Controllers\ContactController;
 */
 
 Route::pattern('contact', '[0-9]+');
-Route::redirect('/', '/contacts');
 
+Route::get('/', fn() => view('home'));
 Route::get('/login', fn() => view('auth.login'))->name('login');
 
 Route::controller(AuthController::class)->group(function () {
